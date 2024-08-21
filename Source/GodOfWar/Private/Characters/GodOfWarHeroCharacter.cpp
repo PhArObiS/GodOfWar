@@ -58,7 +58,7 @@ void AGodOfWarHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Debug::Print(TEXT("Working"));
+	Debug::Print(TEXT("Debugg Working"));
 }
 
 void AGodOfWarHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)
