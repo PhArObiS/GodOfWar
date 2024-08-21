@@ -51,6 +51,7 @@ void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	UGodOfWarInputComponent* GodOfWarInputComponent = CastChecked<UGodOfWarInputComponent>(PlayerInputComponent);
 
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
+	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 }
 
 void AGodOfWarHeroCharacter::BeginPlay()
@@ -77,5 +78,20 @@ void AGodOfWarHeroCharacter::Input_Move(const FInputActionValue& InputActionValu
 		const FVector RightDirection = MovementRotation.RotateVector(FVector::RightVector);
 
 		AddMovementInput(RightDirection, MovementVector.X);
+	}
+}
+
+void AGodOfWarHeroCharacter::Input_Look(const FInputActionValue& InputActionValue)
+{
+	const FVector2D LookAxisVector = InputActionValue.Get<FVector2D>();
+
+	if (LookAxisVector.X != 0.f)
+	{
+		AddControllerPitchInput(LookAxisVector.X);
+	}
+
+	if (LookAxisVector.Y != 0.f)
+	{
+		AddControllerPitchInput(LookAxisVector.Y);
 	}
 }
