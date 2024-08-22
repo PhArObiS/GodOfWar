@@ -28,6 +28,7 @@ void AGodOfWarBaseCharacter::PossessedBy(AController* NewController)
 	if (GodOfWarAbilitySystemComponent)
 	{
 		GodOfWarAbilitySystemComponent->InitAbilityActorInfo(this, this);
+		ensureMsgf(!CharacterStartUpData.IsNull(), TEXT("Forgot to assign start up data to %s"), *GetName());
 	}
 }
 

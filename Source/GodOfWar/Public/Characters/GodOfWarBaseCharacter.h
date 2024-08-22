@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "GodOfWarBaseCharacter.generated.h"
 
+class UDataAsset_StartUpDataBase;
 class UGodOfWarAttributeSet;
 class UGodOfWarAbilitySystemComponent;
 
@@ -34,6 +35,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UGodOfWarAttributeSet* GodOfWarAttributeSet;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
+	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpData;
 public:
 	FORCEINLINE UGodOfWarAbilitySystemComponent* GetGodOfWarAbilitySystemComponent() const { return GodOfWarAbilitySystemComponent; }
 	FORCEINLINE UGodOfWarAttributeSet* GetGodOfWarAttributeSet() const { return GodOfWarAttributeSet; }

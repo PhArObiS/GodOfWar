@@ -7,12 +7,14 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputSubsystems.h"
-
-#include "GodOfWarDebugHelper.h"
 #include "GodOfWarGameplayTags.h"
-#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Components/Input/GodOfWarInputComponent.h"
 #include "DataAssets/Input/DA_InputConfig.h"
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+#include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
+
+#include "GodOfWarDebugHelper.h"
+
 
 
 AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
@@ -43,11 +45,12 @@ void AGodOfWarHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
-	if (GodOfWarAbilitySystemComponent && GodOfWarAttributeSet)
+	if (!CharacterStartUpData.IsNull())
 	{
-		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, AvatarActor: %s"), *GodOfWarAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *GodOfWarAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
-		Debug::Print(TEXT("Ability System component is valid. ") + ASCText, FColor::Green );
-		Debug::Print(TEXT("AttributeSet is valid. ") + ASCText, FColor::Green);
+		if (UDataAsset_StartUpDataBase* LoadData = CharacterStartUpData.LoadSynchronous())
+		{
+			LoadData->GiveToAbilitySystemComponent(GodOfWarAbilitySystemComponent);
+		}
 	}
 }
 
