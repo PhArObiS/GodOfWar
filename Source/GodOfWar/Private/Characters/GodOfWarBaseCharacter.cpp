@@ -2,6 +2,8 @@
 
 
 #include "Characters/GodOfWarBaseCharacter.h"
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+#include "AbilitySystem/GodOfWarAttributeSet.h"
 
 AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 {
@@ -9,5 +11,23 @@ AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 	PrimaryActorTick.bStartWithTickEnabled = false;
 
 	GetMesh()->bReceivesDecals = false;
+
+	GodOfWarAbilitySystemComponent = CreateDefaultSubobject<UGodOfWarAbilitySystemComponent>(TEXT("GodOfWarAbilitySystemComponent"));
+	GodOfWarAttributeSet = CreateDefaultSubobject<UGodOfWarAttributeSet>(TEXT("GodOfWarAttributeSet"));
+}
+
+UAbilitySystemComponent* AGodOfWarBaseCharacter::GetAbilitySystemComponent() const
+{
+	return GetGodOfWarAbilitySystemComponent();
+}
+
+void AGodOfWarBaseCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (GodOfWarAbilitySystemComponent)
+	{
+		GodOfWarAbilitySystemComponent->InitAbilityActorInfo(this, this);
+	}
 }
 

@@ -16,11 +16,20 @@ struct FGodOfWarInputActionConfig
 	GENERATED_BODY()
 
 public:
+	FGodOfWarInputActionConfig()
+		: InputAction(nullptr) // Initialize to nullptr
+	{}
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UInputAction* InputAction;
+
+	bool IsValid() const
+	{
+		return InputTag.IsValid() && InputAction;
+	}
 };
 /**
  * 
@@ -37,5 +46,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
 	TArray<FGodOfWarInputActionConfig> NativeInputActions;
 
-	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InInputTag) const;
+	UInputAction* FindNativeInputActionByTag(const FGameplayTag& InputTag) const;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+	TArray<FGodOfWarInputActionConfig> AbilityInputActions;
 };

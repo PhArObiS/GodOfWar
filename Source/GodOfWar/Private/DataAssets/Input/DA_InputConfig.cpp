@@ -3,11 +3,11 @@
 
 #include "DataAssets/Input/DA_InputConfig.h"
 
-UInputAction* UDA_InputConfig::FindNativeInputActionByTag(const FGameplayTag& InInputTag) const
+UInputAction* UDA_InputConfig::FindNativeInputActionByTag(const FGameplayTag& InputTag) const
 {
 	for (const FGodOfWarInputActionConfig& InputActionConfig : NativeInputActions)
 	{
-		if (InputActionConfig.InputTag == InInputTag && InputActionConfig.InputAction)
+		if (InputActionConfig.InputTag == InputTag && InputActionConfig.InputAction)
 		{
 			return InputActionConfig.InputAction;
 		}

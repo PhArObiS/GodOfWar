@@ -10,6 +10,7 @@
 
 #include "GodOfWarDebugHelper.h"
 #include "GodOfWarGameplayTags.h"
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Components/Input/GodOfWarInputComponent.h"
 #include "DataAssets/Input/DA_InputConfig.h"
 
@@ -38,6 +39,18 @@ AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 }
 
+void AGodOfWarHeroCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (GodOfWarAbilitySystemComponent && GodOfWarAttributeSet)
+	{
+		const FString ASCText = FString::Printf(TEXT("Owner Actor: %s, AvatarActor: %s"), *GodOfWarAbilitySystemComponent->GetOwnerActor()->GetActorLabel(), *GodOfWarAbilitySystemComponent->GetAvatarActor()->GetActorLabel());
+		Debug::Print(TEXT("Ability System component is valid. ") + ASCText, FColor::Green );
+		Debug::Print(TEXT("AttributeSet is valid. ") + ASCText, FColor::Green);
+	}
+}
+
 void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	checkf(InputConfigDataAsset, TEXT("Forgot to assign a valid data asset as input config"));
@@ -57,8 +70,6 @@ void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 void AGodOfWarHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debug::Print(TEXT("Debugg Working"));
 }
 
 void AGodOfWarHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)
