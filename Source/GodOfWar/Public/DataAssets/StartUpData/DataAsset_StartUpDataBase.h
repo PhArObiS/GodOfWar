@@ -18,6 +18,7 @@ class GODOFWAR_API UDataAsset_StartUpDataBase : public UDataAsset
 
 public:
 	virtual void GiveToAbilitySystemComponent(UGodOfWarAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1);
+	
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "StartUpData")
 	TArray<TSubclassOf<UGodOfWarGameplayAbility>>ActivateOnGivenAbilities;

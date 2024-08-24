@@ -10,12 +10,11 @@
 #include "GodOfWarGameplayTags.h"
 #include "Components/Input/GodOfWarInputComponent.h"
 #include "DataAssets/Input/DA_InputConfig.h"
-#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
+#include "Components/Combat/HeroCombatComponent.h"
 
 #include "GodOfWarDebugHelper.h"
-
-
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 
 AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 {
@@ -39,6 +38,8 @@ AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 	GetCharacterMovement()->RotationRate = FRotator(0.f, 500.f, 0.f);
 	GetCharacterMovement()->MaxWalkSpeed = 400.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
+
+	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
 void AGodOfWarHeroCharacter::PossessedBy(AController* NewController)
@@ -68,6 +69,8 @@ void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
+
+	GodOfWarInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
 void AGodOfWarHeroCharacter::BeginPlay()
@@ -108,4 +111,14 @@ void AGodOfWarHeroCharacter::Input_Look(const FInputActionValue& InputActionValu
 	{
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AGodOfWarHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
+{
+	GodOfWarAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
+}
+
+void AGodOfWarHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
+{
+	GodOfWarAbilitySystemComponent->OnAbilityInputReleased(InInputTag);
 }

@@ -6,6 +6,9 @@
 #include "Abilities/GameplayAbility.h"
 #include "GodOfWarGameplayAbility.generated.h"
 
+class UGodOfWarAbilitySystemComponent;
+class UPawnCombatComponent;
+
 UENUM(BlueprintType)
 enum class EGodOfWarAbilityActivationPolicy : uint8
 {
@@ -29,5 +32,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "GodOfWar")
 	EGodOfWarAbilityActivationPolicy GodOfWarAbilityActivationPolicy = EGodOfWarAbilityActivationPolicy::OnTriggered;
 	
-	
+	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
+	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
+
+	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
+	UGodOfWarAbilitySystemComponent* GetGodOfWarAbilitySystemComponentFromActorInfo() const;
 };

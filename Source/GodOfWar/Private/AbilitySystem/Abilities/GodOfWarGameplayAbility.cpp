@@ -3,9 +3,10 @@
 
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+#include "Components/Combat/PawnCombatComponent.h"
 
 void UGodOfWarGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
-	const FGameplayAbilitySpec& Spec)
+                                             const FGameplayAbilitySpec& Spec)
 {
 	Super::OnGiveAbility(ActorInfo, Spec);
 
@@ -30,4 +31,15 @@ void UGodOfWarGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handl
 			ActorInfo->AbilitySystemComponent->ClearAbility(Handle);
 		}
 	}
+}
+
+UPawnCombatComponent* UGodOfWarGameplayAbility::
+GetPawnCombatComponentFromActorInfo() const
+{
+	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
+}
+
+UGodOfWarAbilitySystemComponent* UGodOfWarGameplayAbility::GetGodOfWarAbilitySystemComponentFromActorInfo() const
+{
+	return Cast<UGodOfWarAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
 }
