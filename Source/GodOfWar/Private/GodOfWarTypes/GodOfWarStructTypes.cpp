@@ -1,6 +1,6 @@
 // // NLDevs All Rights Reserved
 
-#include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
+#include "AbilitySystem/Abilities/GodOfWarHeroGameplayAbility.h"
 #include "GodOfWarTypes/GodOfWarStructTypes.h"
 
 bool FGodOfWarHeroAbilitySet::IsValid() const

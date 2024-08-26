@@ -5,9 +5,10 @@
 #include "GameplayTagContainer.h"
 #include "GodOfWarStructTypes.generated.h"
 
-class UInputMappingContext;
-class UGodOfWarGameplayAbility;
+class UGodOfWarHeroGameplayAbility;
 class UGodOfWarHeroLinkedAnimLayer;
+class UInputMappingContext;
+
 
 USTRUCT(BlueprintType)
 struct FGodOfWarHeroAbilitySet
@@ -18,7 +19,7 @@ struct FGodOfWarHeroAbilitySet
 	FGameplayTag InputTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UGodOfWarGameplayAbility> AbilityToGrant;
+	TSubclassOf<UGodOfWarHeroGameplayAbility> AbilityToGrant;
 
 	bool IsValid() const;
 };
