@@ -33,8 +33,7 @@ void UGodOfWarGameplayAbility::EndAbility(const FGameplayAbilitySpecHandle Handl
 	}
 }
 
-UPawnCombatComponent* UGodOfWarGameplayAbility::
-GetPawnCombatComponentFromActorInfo() const
+UPawnCombatComponent* UGodOfWarGameplayAbility::GetPawnCombatComponentFromActorInfo() const
 {
 	return GetAvatarActorFromActorInfo()->FindComponentByClass<UPawnCombatComponent>();
 }

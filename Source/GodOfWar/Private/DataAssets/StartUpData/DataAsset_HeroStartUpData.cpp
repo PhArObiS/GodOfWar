@@ -4,11 +4,6 @@
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 
-bool FGodOfWarHeroAbilitySet::IsValid() const
-{
-	return InputTag.IsValid() && AbilityToGrant;
-}
-
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(UGodOfWarAbilitySystemComponent* InASCToGive,
 	int32 ApplyLevel)
 {

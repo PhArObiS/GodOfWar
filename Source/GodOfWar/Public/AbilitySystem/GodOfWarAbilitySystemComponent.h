@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "GodOfWarTypes/GodOfWarStructTypes.h"
 #include "GodOfWarAbilitySystemComponent.generated.h"
 
+struct FGodOfWarHeroAbilitySet;
 /**
  * 
  */
@@ -16,5 +18,10 @@ class GODOFWAR_API UGodOfWarAbilitySystemComponent : public UAbilitySystemCompon
 public:
 	void OnAbilityInputPressed(const FGameplayTag& InInputTag);
 	void OnAbilityInputReleased(const FGameplayTag& InInputTag);
-	
+
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Ability", meta = (ApplyLevel = "1"))
+	void GrantHeroWeaponAbilities(const TArray<FGodOfWarHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles);
+
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Ability")
+	void RemovedGrantedHeroWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
 };

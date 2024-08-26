@@ -3,23 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
+#include "GodOfWarTypes/GodOfWarStructTypes.h"
 #include "DataAsset_HeroStartUpData.generated.h"
 
-USTRUCT(BlueprintType)
-struct FGodOfWarHeroAbilitySet
-{
-	GENERATED_BODY()
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = " InputTag"))
-	FGameplayTag InputTag;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSubclassOf<UGodOfWarGameplayAbility> AbilityToGrant;
-
-	bool IsValid() const;
-};
 /**
  * 
  */
