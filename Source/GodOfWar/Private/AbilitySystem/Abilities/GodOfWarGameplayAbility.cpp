@@ -5,8 +5,7 @@
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Components/Combat/PawnCombatComponent.h"
 
-void UGodOfWarGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo,
-                                             const FGameplayAbilitySpec& Spec)
+void UGodOfWarGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
 	Super::OnGiveAbility(ActorInfo, Spec);
 

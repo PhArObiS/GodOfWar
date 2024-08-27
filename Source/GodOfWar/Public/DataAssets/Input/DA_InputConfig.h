@@ -16,9 +16,10 @@ struct FGodOfWarInputActionConfig
 	GENERATED_BODY()
 
 public:
-	FGodOfWarInputActionConfig()
-		: InputAction(nullptr) // Initialize to nullptr
-	{}
+	
+	// FGodOfWarInputActionConfig()
+	// 	: InputAction(nullptr) // Initialize to nullptr
+	// {}
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "InputTag"))
 	FGameplayTag InputTag;

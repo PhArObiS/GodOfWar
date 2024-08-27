@@ -11,7 +11,7 @@ void UGodOfWarHeroAnimInstance::NativeInitializeAnimation()
 
 	if (OwningCharacter)
 	{
-		OwningCharacter = Cast<AGodOfWarHeroCharacter>(OwningCharacter);
+		OwningHeroCharacter = Cast<AGodOfWarHeroCharacter>(OwningCharacter);
 	}
 }
 
