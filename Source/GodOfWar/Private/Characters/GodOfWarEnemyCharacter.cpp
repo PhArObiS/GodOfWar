@@ -31,6 +31,7 @@ void AGodOfWarEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
 
+	InitEnemyStartUpData();
 	
 }
 

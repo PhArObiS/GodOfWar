@@ -1,8 +1,8 @@
 // // NLDevs All Rights Reserved
 
+#include "DataAssets/StartUpData/DataAsset_EnemyStartUpData.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "AbilitySystem/Abilities/GodOfWarEnemyGameplayAbility.h"
-#include "DataAssets/StartUpData/DataAsset_EnemyStartUpData.h"
 
 void UDataAsset_EnemyStartUpData::GiveToAbilitySystemComponent(UGodOfWarAbilitySystemComponent* InASCToGive, int32 ApplyLevel)
 {
@@ -10,7 +10,7 @@ void UDataAsset_EnemyStartUpData::GiveToAbilitySystemComponent(UGodOfWarAbilityS
 
 	if (!EnemyCombatAbilities.IsEmpty())
 	{
-		for(const TSubclassOf<UGodOfWarEnemyGameplayAbility>& AbilityClass : EnemyCombatAbilities)
+		for (const TSubclassOf<UGodOfWarEnemyGameplayAbility>& AbilityClass : EnemyCombatAbilities)
 		{
 			if (!AbilityClass) continue;
 
