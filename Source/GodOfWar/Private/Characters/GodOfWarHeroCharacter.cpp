@@ -12,9 +12,9 @@
 #include "DataAssets/Input/DA_InputConfig.h"
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "Components/Combat/HeroCombatComponent.h"
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 
 #include "GodOfWarDebugHelper.h"
-#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 
 AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 {
