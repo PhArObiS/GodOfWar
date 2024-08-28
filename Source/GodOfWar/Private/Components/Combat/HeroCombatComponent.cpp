@@ -14,6 +14,16 @@ AGodOfWarHeroWeapon* UHeroCombatComponent::GetHeroCarriedWeaponByTag(FGameplayTa
 	return Cast<AGodOfWarHeroWeapon>(GetCharacterCarriedWeaponByTag(InWeaponTag));
 }
 
+AGodOfWarHeroWeapon* UHeroCombatComponent::GetHeroCurrentEquippedWeapon() const
+{
+	return Cast<AGodOfWarHeroWeapon>(GetCharacterCurrentEquippedWeapon());
+}
+
+float UHeroCombatComponent::GetHeroCurrentEquipWeaponDamageAtLevel(float InLevel) const
+{
+	return GetHeroCurrentEquippedWeapon()->HeroWeaponData.WeaponBaseDamage.GetValueAtLevel(InLevel);
+}
+
 void UHeroCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
 	if (OverlappedActors.Contains(HitActor))

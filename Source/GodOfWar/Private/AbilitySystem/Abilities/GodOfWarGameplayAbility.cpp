@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Components/Combat/PawnCombatComponent.h"
 
@@ -40,4 +42,25 @@ UPawnCombatComponent* UGodOfWarGameplayAbility::GetPawnCombatComponentFromActorI
 UGodOfWarAbilitySystemComponent* UGodOfWarGameplayAbility::GetGodOfWarAbilitySystemComponentFromActorInfo() const
 {
 	return Cast<UGodOfWarAbilitySystemComponent>(CurrentActorInfo->AbilitySystemComponent);
+}
+
+FActiveGameplayEffectHandle UGodOfWarGameplayAbility::NativeApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle) const
+{
+	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
+	check(TargetASC && InSpecHandle.IsValid());
+	
+	GetGodOfWarAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(
+		*InSpecHandle.Data,
+		TargetASC
+	);
+	return FActiveGameplayEffectHandle();
+}
+
+FActiveGameplayEffectHandle UGodOfWarGameplayAbility::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, EGodOfWarSuccessType& OutSuccessType)
+{
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle =  NativeApplyEffectSpecHandleToTarget(TargetActor, InSpecHandle);
+
+	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied() ? EGodOfWarSuccessType::Successful : EGodOfWarSuccessType::Failed;
+
+	return ActiveGameplayEffectHandle;
 }

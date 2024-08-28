@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
 
+	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
+	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
+
 private:
 	TWeakObjectPtr<AGodOfWarHeroCharacter> CachedGodOfWarHeroCharacter;
 	TWeakObjectPtr<AGodOfWarHeroController> CachedGodOfWarHeroController;

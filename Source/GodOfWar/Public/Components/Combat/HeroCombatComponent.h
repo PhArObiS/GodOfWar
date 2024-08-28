@@ -19,6 +19,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Combat")
 	AGodOfWarHeroWeapon* GetHeroCarriedWeaponByTag(FGameplayTag InWeaponTag) const;
 
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Combat")
+	AGodOfWarHeroWeapon* GetHeroCurrentEquippedWeapon() const;
+
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Combat")
+	float GetHeroCurrentEquipWeaponDamageAtLevel(float InLevel) const;
+
 	virtual void OnHitTargetActor(AActor* HitActor) override;
 	virtual void OnWeaponPulledFromTargetActor(AActor* InteractedActor) override;
 };

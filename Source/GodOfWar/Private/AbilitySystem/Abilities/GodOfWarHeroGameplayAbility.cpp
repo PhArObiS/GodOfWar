@@ -2,6 +2,9 @@
 
 
 #include "AbilitySystem/Abilities/GodOfWarHeroGameplayAbility.h"
+
+#include "GodOfWarGameplayTags.h"
+#include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Characters/GodOfWarHeroCharacter.h"
 #include "Controllers/GodOfWarHeroController.h"
 
@@ -26,4 +29,31 @@ AGodOfWarHeroController* UGodOfWarHeroGameplayAbility::GetHeroControllerFromActo
 UHeroCombatComponent* UGodOfWarHeroGameplayAbility::GetHeroCombatComponentFromActorInfo()
 {
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
+}
+
+FGameplayEffectSpecHandle UGodOfWarHeroGameplayAbility::MakeHeroDamageEffectSpecHandle( TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount)
+{
+	check(EffectClass);
+
+	FGameplayEffectContextHandle ContextHandle = GetGodOfWarAbilitySystemComponentFromActorInfo()->MakeEffectContext();
+	ContextHandle.SetAbility(this);
+	ContextHandle.AddSourceObject(GetAvatarActorFromActorInfo()),
+	ContextHandle.AddInstigator(GetAvatarActorFromActorInfo(), GetAvatarActorFromActorInfo());
+	
+	FGameplayEffectSpecHandle EffectSpecHandle = GetGodOfWarAbilitySystemComponentFromActorInfo()->MakeOutgoingSpec(
+		EffectClass,
+		GetAbilityLevel(),
+		ContextHandle
+	);
+
+	EffectSpecHandle.Data->SetSetByCallerMagnitude(
+		GodOfWarGameplayTags::Shared_SetByCaller_BaseDamage,
+		InWeaponBaseDamage
+		);
+
+	if (InCurrentAttackTypeTag.IsValid())
+	{
+		EffectSpecHandle.Data->SetSetByCallerMagnitude(InCurrentAttackTypeTag, InUsedComboCount);
+	}
+	return EffectSpecHandle;
 }

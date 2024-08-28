@@ -8,8 +8,15 @@ enum class EGodOfWarConfirmType : uint8
 };
 
 UENUM()
-enum class  EGodOfWarValidType : uint8
+enum class EGodOfWarValidType : uint8
 {
 	Valid,
 	Invalid
+};
+
+UENUM()
+enum class EGodOfWarSuccessType : uint8
+{
+	Successful,
+	Failed
 };

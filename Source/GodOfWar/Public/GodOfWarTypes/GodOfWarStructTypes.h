@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameplayTagContainer.h"
+#include "ScalableFloat.h"
 #include "GodOfWarStructTypes.generated.h"
 
 class UGodOfWarGameplayAbility;
@@ -37,4 +38,7 @@ struct FGodOfWarHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
 	TArray<FGodOfWarHeroAbilitySet> DefaultWeaponAbilities;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FScalableFloat WeaponBaseDamage;
 };

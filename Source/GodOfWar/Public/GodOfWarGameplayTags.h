@@ -27,10 +27,14 @@ namespace GodOfWarGameplayTags
 
 	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Status_JumpToFinisher);
 
+	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Light);
+	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_SetByCaller_AttackType_Heavy);
+	
 	/** Enemy Tags **/
 	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
 
 	/** Shared Tags **/
-	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_MeleeHit);;
+	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_Event_MeleeHit);
+	GODOFWAR_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Shared_SetByCaller_BaseDamage);
 	
 }
