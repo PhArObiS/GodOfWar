@@ -4,6 +4,9 @@
 #include "GodOfWarFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+#include "Interfaces/PawnCombatInterface.h"
+
+class UPawnCombatComponent;
 
 UGodOfWarAbilitySystemComponent* UGodOfWarFunctionLibrary::NativeGetGodOfWarASCFromActor(AActor* InActor)
 {
@@ -42,5 +45,25 @@ bool UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(AActor* InActor, FGameplay
 void UGodOfWarFunctionLibrary::BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EGodOfWarConfirmType& OutConfirmType)
 {
 	OutConfirmType = NativeDoesActorHaveTag(InActor, TagToCheck) ? EGodOfWarConfirmType::Yes : EGodOfWarConfirmType::No;
+}
+
+UPawnCombatComponent* UGodOfWarFunctionLibrary::NativeGetPawnCombatComponentFromActor(AActor* InActor)
+{
+	check(InActor);
+
+	if (IPawnCombatInterface* PawnCombatInterface = Cast<IPawnCombatInterface>(InActor))
+	{
+		return PawnCombatInterface->GetPawnCombatComponent();
+	}
+	return nullptr;
+}
+
+UPawnCombatComponent* UGodOfWarFunctionLibrary::BP_GetPawnCombatComponentFromActor(AActor* InActor, EGodOfWarValidType& OutValidType)
+{
+	UPawnCombatComponent* CombatComponent = NativeGetPawnCombatComponentFromActor(InActor);
+	
+	OutValidType = CombatComponent ? EGodOfWarValidType::Valid : EGodOfWarValidType::Invalid;
+	
+	return CombatComponent;
 }
 

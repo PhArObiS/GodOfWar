@@ -5,6 +5,8 @@
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "AbilitySystem/GodOfWarAttributeSet.h"
 
+class UPawnCombatComponent;
+
 AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -19,6 +21,11 @@ AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 UAbilitySystemComponent* AGodOfWarBaseCharacter::GetAbilitySystemComponent() const
 {
 	return GetGodOfWarAbilitySystemComponent();
+}
+
+UPawnCombatComponent* AGodOfWarBaseCharacter::GetPawnCombatComponent() const
+{
+	return nullptr;
 }
 
 void AGodOfWarBaseCharacter::PossessedBy(AController* NewController)

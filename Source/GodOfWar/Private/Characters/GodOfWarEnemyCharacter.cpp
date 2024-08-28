@@ -27,6 +27,11 @@ AGodOfWarEnemyCharacter::AGodOfWarEnemyCharacter()
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
 }
 
+UPawnCombatComponent* AGodOfWarEnemyCharacter::GetPawnCombatComponent() const
+{
+	return EnemyCombatComponent;
+}
+
 void AGodOfWarEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -50,8 +55,6 @@ void AGodOfWarEnemyCharacter::InitEnemyStartUpData()
 				if (UDataAsset_StartUpDataBase* LoadedData = CharacterStartUpData.Get())
 				{
 					LoadedData->GiveToAbilitySystemComponent(GodOfWarAbilitySystemComponent);
-
-					Debug::Print(TEXT("Enemy Start Up Data is Loaded!"), FColor::Green);
 				}
 			}
 		)

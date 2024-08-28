@@ -2,9 +2,11 @@
 
 
 #include "Components/Combat/PawnCombatComponent.h"
+
+#include "Components/BoxComponent.h"
 #include "Items/Weapons/GodOfWarWeaponBase.h"
 
-// #include "GodOfWarDebugHelper.h"
+#include "GodOfWarDebugHelper.h"
 
 void UPawnCombatComponent::RegisterSpawnedWeapon(FGameplayTag InWeaponTagToRegister, AGodOfWarWeaponBase* InWeaponToRegister, bool bRegisterAsEquippedWeapon)
 {
@@ -41,4 +43,25 @@ AGodOfWarWeaponBase* UPawnCombatComponent::GetCharacterCurrentEquippedWeapon() c
 		return nullptr;
 	}
 	return GetCharacterCarriedWeaponByTag(CurrentEquippedWeaponTag);
+}
+
+void UPawnCombatComponent::ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	if (ToggleDamageType == EToggleDamageType::CurrentEquippedWeapon)
+	{
+		AGodOfWarWeaponBase* WeaponToToggle = GetCharacterCurrentEquippedWeapon();
+
+		check(WeaponToToggle);
+
+		if (bShouldEnable)
+		{
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+		}
+		else
+		{
+			WeaponToToggle->GetWeaponCollisionBox()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		}
+	}
+
+	//TODO: Handle body collision boxes
 }

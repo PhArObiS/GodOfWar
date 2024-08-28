@@ -42,6 +42,11 @@ AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
 }
 
+UPawnCombatComponent* AGodOfWarHeroCharacter::GetPawnCombatComponent() const
+{
+	return HeroCombatComponent;
+}
+
 void AGodOfWarHeroCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -104,7 +109,7 @@ void AGodOfWarHeroCharacter::Input_Look(const FInputActionValue& InputActionValu
 
 	if (LookAxisVector.X != 0.f)
 	{
-		AddControllerPitchInput(LookAxisVector.X);
+		AddControllerYawInput(LookAxisVector.X);
 	}
 
 	if (LookAxisVector.Y != 0.f)
