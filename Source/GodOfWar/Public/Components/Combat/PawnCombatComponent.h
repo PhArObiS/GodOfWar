@@ -9,6 +9,15 @@
 
 struct FGameplayTag;
 class AGodOfWarWeaponBase;
+
+UENUM(BlueprintType)
+enum class EToggleDamageType : uint8
+{
+	CurrentEquippedWeapon,
+	LeftHand,
+	RightHand
+};
+
 /**
  * 
  */
@@ -30,6 +39,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Combat")
 	AGodOfWarWeaponBase* GetCharacterCurrentEquippedWeapon() const;
 
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Combat")
+	void ToggleWeaponCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType = EToggleDamageType::CurrentEquippedWeapon);
 private:
 	TMap<FGameplayTag, AGodOfWarWeaponBase*> CharacterCarriedWeaponMap;
 };

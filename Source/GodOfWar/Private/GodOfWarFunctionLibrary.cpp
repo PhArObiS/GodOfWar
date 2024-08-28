@@ -6,8 +6,6 @@
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 
-class UPawnCombatComponent;
-
 UGodOfWarAbilitySystemComponent* UGodOfWarFunctionLibrary::NativeGetGodOfWarASCFromActor(AActor* InActor)
 {
 	check(InActor);

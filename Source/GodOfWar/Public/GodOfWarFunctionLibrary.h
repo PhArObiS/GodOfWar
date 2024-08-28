@@ -4,17 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "GodOfWarTypes/GodOfWarEnumTypes.h"
 #include "GodOfWarFunctionLibrary.generated.h"
 
-// struct FGameplayTag;
+class UPawnCombatComponent;
+struct FGameplayTag;
 class UGodOfWarAbilitySystemComponent;
 
-UENUM()
-enum class EGodOfWarConfirmType : uint8
-{
-	Yes,
-	No
-};
 
 /**
  * 
@@ -36,4 +32,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary", meta = (DisplayName = "Does Actor Have Tag", ExpandEnumAsExecs = "OutConfirmType"))
 	static void BP_DoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck, EGodOfWarConfirmType& OutConfirmType);
+
+	static UPawnCombatComponent* NativeGetPawnCombatComponentFromActor(AActor* InActor);
+
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary", meta = (DisplayName = "Get Pawn Combat Component From Actor", ExpandEnumAsExecs = "OutValidType"))
+	static UPawnCombatComponent* BP_GetPawnCombatComponentFromActor(AActor* InActor, EGodOfWarValidType& OutValidType);
 };

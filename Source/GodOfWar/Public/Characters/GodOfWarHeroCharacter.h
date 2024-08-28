@@ -24,6 +24,10 @@ class GODOFWAR_API AGodOfWarHeroCharacter : public AGodOfWarBaseCharacter
 public:
 	AGodOfWarHeroCharacter();
 
+	//~ Begin PawnCombatInterface Interface
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	//~ End PawnCombatInterface Interface
+
 protected:
 	//~ Begin APawn Interface
 	virtual void PossessedBy(AController* NewController) override;
