@@ -28,6 +28,12 @@ UPawnCombatComponent* AGodOfWarBaseCharacter::GetPawnCombatComponent() const
 	return nullptr;
 }
 
+UPawnUIComponent* AGodOfWarBaseCharacter::GetPawnUIComponent() const
+{
+	return nullptr;
+}
+
+
 void AGodOfWarBaseCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);

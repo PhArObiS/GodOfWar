@@ -13,6 +13,7 @@
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "Components/Combat/HeroCombatComponent.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+#include "Components/UI/HeroUIComponent.h"
 
 #include "GodOfWarDebugHelper.h"
 
@@ -40,11 +41,22 @@ AGodOfWarHeroCharacter::AGodOfWarHeroCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 
 	HeroCombatComponent = CreateDefaultSubobject<UHeroCombatComponent>(TEXT("HeroCombatComponent"));
+	HeroUIComponent = CreateDefaultSubobject<UHeroUIComponent>(TEXT("HeroUIComponent"));
 }
 
 UPawnCombatComponent* AGodOfWarHeroCharacter::GetPawnCombatComponent() const
 {
 	return HeroCombatComponent;
+}
+
+UPawnUIComponent* AGodOfWarHeroCharacter::GetPawnUIComponent() const
+{
+	return HeroUIComponent;
+}
+
+UHeroUIComponent* AGodOfWarHeroCharacter::GetHeroUIComponent() const
+{
+	return HeroUIComponent;
 }
 
 void AGodOfWarHeroCharacter::PossessedBy(AController* NewController)

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Interfaces/PawnCombatInterface.h"
+#include "Interfaces/PawnUIInterface.h"
 #include "GodOfWarBaseCharacter.generated.h"
 
 class UDataAsset_StartUpDataBase;
@@ -13,7 +14,7 @@ class UGodOfWarAttributeSet;
 class UGodOfWarAbilitySystemComponent;
 
 UCLASS()
-class GODOFWAR_API AGodOfWarBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface
+class GODOFWAR_API AGodOfWarBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public IPawnUIInterface
 {
 	GENERATED_BODY()
 
@@ -25,9 +26,13 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	//~ End IAbilitySystemComponent Interface
 
-	//~ Begin PawnCombatInterface Interface
+	//~ BeginI PawnCombatInterface Interface
 	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
-	//~ End PawnCombatInterface Interface
+	//~ End IPawnCombatInterface Interface
+
+	//~ Begin IPawnUIInterface Interface
+	virtual UPawnUIComponent* GetPawnUIComponent() const override;
+	//~ End IPawnUIInterface Interface
 	
 protected:
 	//~ Begin APawn Interface

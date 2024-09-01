@@ -6,6 +6,7 @@
 #include "DataAssets/StartUpData/DataAsset_StartUpDataBase.h"
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Components/UI/EnemyUIComponent.h"
 
 #include "GodOfWarDebugHelper.h"
 
@@ -25,11 +26,17 @@ AGodOfWarEnemyCharacter::AGodOfWarEnemyCharacter()
 	GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
+	EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>("EnemyUIComponent");
 }
 
 UPawnCombatComponent* AGodOfWarEnemyCharacter::GetPawnCombatComponent() const
 {
 	return EnemyCombatComponent;
+}
+
+UPawnUIComponent* AGodOfWarEnemyCharacter::GetPawnUIComponent() const
+{
+	return EnemyUIComponent;
 }
 
 void AGodOfWarEnemyCharacter::PossessedBy(AController* NewController)
@@ -40,7 +47,7 @@ void AGodOfWarEnemyCharacter::PossessedBy(AController* NewController)
 	
 }
 
-void AGodOfWarEnemyCharacter::InitEnemyStartUpData()
+void AGodOfWarEnemyCharacter::InitEnemyStartUpData() const
 {
 	if (CharacterStartUpData.IsNull())
 	{
