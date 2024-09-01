@@ -49,11 +49,10 @@ FActiveGameplayEffectHandle UGodOfWarGameplayAbility::NativeApplyEffectSpecHandl
 	UAbilitySystemComponent* TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(TargetActor);
 	check(TargetASC && InSpecHandle.IsValid());
 	
-	GetGodOfWarAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(
+	return GetGodOfWarAbilitySystemComponentFromActorInfo()->ApplyGameplayEffectSpecToTarget(
 		*InSpecHandle.Data,
 		TargetASC
 	);
-	return FActiveGameplayEffectHandle();
 }
 
 FActiveGameplayEffectHandle UGodOfWarGameplayAbility::BP_ApplyEffectSpecHandleToTarget(AActor* TargetActor, const FGameplayEffectSpecHandle& InSpecHandle, EGodOfWarSuccessType& OutSuccessType)

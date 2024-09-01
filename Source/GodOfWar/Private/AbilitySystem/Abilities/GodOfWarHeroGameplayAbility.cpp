@@ -49,7 +49,7 @@ FGameplayEffectSpecHandle UGodOfWarHeroGameplayAbility::MakeHeroDamageEffectSpec
 	EffectSpecHandle.Data->SetSetByCallerMagnitude(
 		GodOfWarGameplayTags::Shared_SetByCaller_BaseDamage,
 		InWeaponBaseDamage
-		);
+	);
 
 	if (InCurrentAttackTypeTag.IsValid())
 	{

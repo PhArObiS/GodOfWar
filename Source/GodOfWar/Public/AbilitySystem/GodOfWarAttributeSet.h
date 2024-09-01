@@ -24,6 +24,8 @@ class GODOFWAR_API UGodOfWarAttributeSet : public UAttributeSet
 public:
 	UGodOfWarAttributeSet();
 
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
 	UPROPERTY(BlueprintReadOnly, Category = "Health")
 	FGameplayAttributeData CurrentHealth;
 	ATTRIBUTE_ACCESSORS(UGodOfWarAttributeSet, CurrentHealth)

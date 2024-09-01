@@ -30,6 +30,7 @@ UGEExecCalc_DamageTaken::UGEExecCalc_DamageTaken()
 {
 	RelevantAttributesToCapture.Add(GetGodOfWarDamageCapture().AttackPowerDef);
 	RelevantAttributesToCapture.Add(GetGodOfWarDamageCapture().DefensePowerDef);
+	RelevantAttributesToCapture.Add(GetGodOfWarDamageCapture().DamageTakenDef);
 }
 
 void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustomExecutionParameters& ExecutionParams, FGameplayEffectCustomExecutionOutput& OutExecutionOutput) const
@@ -47,7 +48,7 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 
 	float SourceAttackPower = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetGodOfWarDamageCapture().AttackPowerDef, EvaluateParameters, SourceAttackPower);
-	Debug::Print(TEXT("SourceAttackPower"), SourceAttackPower);
+	// Debug::Print(TEXT("SourceAttackPower"), SourceAttackPower);
 	
 	float BaseDamage = 0.f;
 	int32 UsedLightAttackCombatCount = 0;
@@ -58,32 +59,32 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		if (TagMagnitude.Key.MatchesTagExact(GodOfWarGameplayTags::Shared_SetByCaller_BaseDamage))
 		{
 			BaseDamage = TagMagnitude.Value;
-			Debug::Print(TEXT("BaseDamage"), BaseDamage);
+			// Debug::Print(TEXT("BaseDamage"), BaseDamage);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(GodOfWarGameplayTags::Player_SetByCaller_AttackType_Light))
 		{
 			UsedLightAttackCombatCount = TagMagnitude.Value;
-			Debug::Print(TEXT("UsedLightAttackCombatCount"), UsedLightAttackCombatCount);
+			// Debug::Print(TEXT("UsedLightAttackCombatCount"), UsedLightAttackCombatCount);
 		}
 
 		if (TagMagnitude.Key.MatchesTagExact(GodOfWarGameplayTags::Player_SetByCaller_AttackType_Heavy))
 		{
 			UsedHeavyAttackCombatCount = TagMagnitude.Value;
-			Debug::Print(TEXT("UsedHeavyAttackCombatCount"), UsedHeavyAttackCombatCount);
+			// Debug::Print(TEXT("UsedHeavyAttackCombatCount"), UsedHeavyAttackCombatCount);
 		}
 	}
 	
 	float TargetDefensePower = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetGodOfWarDamageCapture().DefensePowerDef,  EvaluateParameters, TargetDefensePower);
-	Debug::Print(TEXT("TargetDefensePower"), TargetDefensePower);
+	// Debug::Print(TEXT("TargetDefensePower"), TargetDefensePower);
 	
 	if (UsedLightAttackCombatCount != 0)
 	{
 		const float DamageIncreasePercentLight = (UsedLightAttackCombatCount - 1) * 0.05 + 1.f;
 
 		BaseDamage *= DamageIncreasePercentLight;
-		Debug::Print(TEXT("ScaledBaseDamageLight"), BaseDamage);
+		// Debug::Print(TEXT("ScaledBaseDamageLight"), BaseDamage);
 	}
 
 	if (UsedHeavyAttackCombatCount != 0)
@@ -91,11 +92,11 @@ void UGEExecCalc_DamageTaken::Execute_Implementation(const FGameplayEffectCustom
 		const float DamageIncreasePercentHeavy = UsedHeavyAttackCombatCount * 0.15f + 1.f;
 
 		BaseDamage *= DamageIncreasePercentHeavy;
-		Debug::Print(TEXT("ScaledBaseDamageHeavy"), BaseDamage);
+		// Debug::Print(TEXT("ScaledBaseDamageHeavy"), BaseDamage);
 	}
 
 	const float FinalDamageDone = BaseDamage * SourceAttackPower / TargetDefensePower;
-	Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
+	// Debug::Print(TEXT("FinalDamageDone"), FinalDamageDone);
 	
 	if (FinalDamageDone > 0)
 	{
