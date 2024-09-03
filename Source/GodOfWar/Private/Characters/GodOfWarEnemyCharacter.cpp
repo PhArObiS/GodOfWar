@@ -7,9 +7,10 @@
 #include "Engine/AssetManager.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/UI/EnemyUIComponent.h"
+#include "Components/WidgetComponent.h"
+#include "Widgets/GodOfWarWidgetBase.h"
 
 #include "GodOfWarDebugHelper.h"
-
 
 AGodOfWarEnemyCharacter::AGodOfWarEnemyCharacter()
 {
@@ -27,6 +28,8 @@ AGodOfWarEnemyCharacter::AGodOfWarEnemyCharacter()
 
 	EnemyCombatComponent = CreateDefaultSubobject<UEnemyCombatComponent>("EnemyCombatComponent");
 	EnemyUIComponent = CreateDefaultSubobject<UEnemyUIComponent>("EnemyUIComponent");
+	EnemyHealthWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("EnemyHealthWidgetComponent");
+	EnemyHealthWidgetComponent->SetupAttachment(GetMesh());
 }
 
 UPawnCombatComponent* AGodOfWarEnemyCharacter::GetPawnCombatComponent() const
@@ -37,6 +40,21 @@ UPawnCombatComponent* AGodOfWarEnemyCharacter::GetPawnCombatComponent() const
 UPawnUIComponent* AGodOfWarEnemyCharacter::GetPawnUIComponent() const
 {
 	return EnemyUIComponent;
+}
+
+UEnemyUIComponent* AGodOfWarEnemyCharacter::GetEnemyUIComponent() const
+{
+	return EnemyUIComponent;
+}
+
+void AGodOfWarEnemyCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (UGodOfWarWidgetBase* HealthWidget = Cast<UGodOfWarWidgetBase>(EnemyHealthWidgetComponent->GetUserWidgetObject()))
+	{
+		HealthWidget->InitEnemyCreatedWidget(this);
+	}
 }
 
 void AGodOfWarEnemyCharacter::PossessedBy(AController* NewController)

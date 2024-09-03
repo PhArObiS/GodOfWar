@@ -1,4 +1,4 @@
-// // NLDevs All Rights Reserved
+// NLDevs All Rights Reserved
 
 #pragma once
 
@@ -41,4 +41,7 @@ struct FGodOfWarHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UTexture2D> SoftWeaponIconTexture;
 };

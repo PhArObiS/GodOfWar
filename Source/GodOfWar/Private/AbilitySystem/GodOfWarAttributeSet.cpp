@@ -71,7 +71,7 @@ void UGodOfWarAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 
 		PawnUIComponent->OnCurrentHealthChanged.Broadcast(GetCurrentHealth() / GetMaxHealth());
 
-		if (NewCurrentHealth == 0.f)
+		if (GetCurrentHealth() == 0.f)
 		{
 			UGodOfWarFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GodOfWarGameplayTags::Shared_Status_Dead);
 		}
