@@ -3,3 +3,12 @@
 
 #include "Controllers/GodOfWarHeroController.h"
 
+AGodOfWarHeroController::AGodOfWarHeroController()
+{
+	HeroTeamId = FGenericTeamId(0);
+}
+
+FGenericTeamId AGodOfWarHeroController::GetGenericTeamId() const
+{
+	return HeroTeamId;
+}

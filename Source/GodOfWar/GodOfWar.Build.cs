@@ -14,7 +14,7 @@ public class GodOfWar : ModuleRules
 			"InputCore", 
 			"EnhancedInput", 
 			"GameplayTags",
-			"GameplayTasks", "GameplayAbilities"
+			"GameplayTasks", "GameplayAbilities", "AIModule"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
