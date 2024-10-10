@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
 	UEnemyCombatComponent* GetEnemyCombatComponentFromActorInfo();
 
+	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
+	FGameplayEffectSpecHandle MakeEnemyDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, const FScalableFloat& InDamageScalableFloat);
+
 private:
 	TWeakObjectPtr<AGodOfWarEnemyCharacter> CachedGodOfWarEnemyCharacter;
 };

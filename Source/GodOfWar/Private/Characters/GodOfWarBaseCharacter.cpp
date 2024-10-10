@@ -2,11 +2,12 @@
 
 
 #include "Characters/GodOfWarBaseCharacter.h"
+#include "MotionWarpingComponent.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "AbilitySystem/GodOfWarAttributeSet.h"
 
 class UPawnCombatComponent;
-
+ 
 AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
@@ -16,6 +17,7 @@ AGodOfWarBaseCharacter::AGodOfWarBaseCharacter()
 
 	GodOfWarAbilitySystemComponent = CreateDefaultSubobject<UGodOfWarAbilitySystemComponent>(TEXT("GodOfWarAbilitySystemComponent"));
 	GodOfWarAttributeSet = CreateDefaultSubobject<UGodOfWarAttributeSet>(TEXT("GodOfWarAttributeSet"));
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 }
 
 UAbilitySystemComponent* AGodOfWarBaseCharacter::GetAbilitySystemComponent() const

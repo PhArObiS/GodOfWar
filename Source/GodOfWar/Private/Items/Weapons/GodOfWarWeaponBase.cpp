@@ -3,6 +3,7 @@
 #include "Items/Weapons/GodOfWarWeaponBase.h"
 
 #include "GodOfWarDebugHelper.h"
+#include "GodOfWarFunctionLibrary.h"
 #include "Components/BoxComponent.h"
 
 AGodOfWarWeaponBase::AGodOfWarWeaponBase()
@@ -28,11 +29,10 @@ void AGodOfWarWeaponBase::OnCollisionBoxBeginOverlap(UPrimitiveComponent* Overla
 
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UGodOfWarFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
 			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
-		//TODO: Implement hit check for enemy characters
 	}
 }
 
@@ -44,11 +44,10 @@ void AGodOfWarWeaponBase::OnCollisionBoxEndOverlap(UPrimitiveComponent* Overlapp
 
 	if (APawn* HitPawn = Cast<APawn>(OtherActor))
 	{
-		if (WeaponOwningPawn != HitPawn)
+		if (UGodOfWarFunctionLibrary::IsTargetPawnHostile(WeaponOwningPawn, HitPawn))
 		{
-			OnWeaponPulledFromTarget.ExecuteIfBound(OtherActor);
+			OnWeaponHitTarget.ExecuteIfBound(OtherActor);
 		}
-		//TODO: Implement hit check for enemy characters
 	}
 }
 

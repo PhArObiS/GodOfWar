@@ -2,4 +2,13 @@
 
 
 #include "AnimInstances/GodOfWarBaseAnimInstance.h"
+#include "GodOfWarFunctionLibrary.h"
 
+bool UGodOfWarBaseAnimInstance::DoesOwnerHaveTag(FGameplayTag TagToCheck) const
+{
+	if (APawn* OwningPawn = TryGetPawnOwner())
+	{
+		return UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(OwningPawn, TagToCheck);
+	}
+	return false;
+}

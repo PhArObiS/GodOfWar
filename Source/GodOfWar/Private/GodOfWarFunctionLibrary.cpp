@@ -3,6 +3,7 @@
 
 #include "GodOfWarFunctionLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 
@@ -63,5 +64,19 @@ UPawnCombatComponent* UGodOfWarFunctionLibrary::BP_GetPawnCombatComponentFromAct
 	OutValidType = CombatComponent ? EGodOfWarValidType::Valid : EGodOfWarValidType::Invalid;
 	
 	return CombatComponent;
+}
+
+bool UGodOfWarFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn)
+{
+	check(QueryPawn && TargetPawn);
+
+	IGenericTeamAgentInterface* QueryTeamAgent = Cast<IGenericTeamAgentInterface>(QueryPawn->GetController());
+	IGenericTeamAgentInterface* TargetTeamAgent = Cast<IGenericTeamAgentInterface>(TargetPawn->GetController());
+
+	if (QueryTeamAgent && TargetTeamAgent)
+	{
+		return QueryTeamAgent->GetGenericTeamId() != TargetTeamAgent->GetGenericTeamId();
+	}
+	return false;
 }
 

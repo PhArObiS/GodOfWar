@@ -21,7 +21,7 @@ public:
 	//~ Begin IGenericTeamAgentInterface Interface
 	virtual FGenericTeamId GetGenericTeamId() const override;
 	//~ End IGenericTeamAgentInterface
-
+ 
 private:
 	FGenericTeamId HeroTeamId;
 };

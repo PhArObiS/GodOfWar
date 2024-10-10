@@ -12,6 +12,7 @@
 class UDataAsset_StartUpDataBase;
 class UGodOfWarAttributeSet;
 class UGodOfWarAbilitySystemComponent;
+class UMotionWarpingComponent;
 
 UCLASS()
 class GODOFWAR_API AGodOfWarBaseCharacter : public ACharacter, public IAbilitySystemInterface, public IPawnCombatInterface, public IPawnUIInterface
@@ -44,6 +45,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
 	UGodOfWarAttributeSet* GodOfWarAttributeSet;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "MotionWarping")
+	UMotionWarpingComponent* MotionWarpingComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CharacterData")
 	TSoftObjectPtr<UDataAsset_StartUpDataBase> CharacterStartUpData;
