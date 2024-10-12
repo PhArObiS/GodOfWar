@@ -80,3 +80,13 @@ bool UGodOfWarFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targ
 	return false;
 }
 
+bool UGodOfWarFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor,
+	const FGameplayEffectSpecHandle& InSpecHandle)
+{
+	UGodOfWarAbilitySystemComponent* SourceASC = NativeGetGodOfWarASCFromActor(InInstigator);
+	UGodOfWarAbilitySystemComponent* TargetASC = NativeGetGodOfWarASCFromActor(InTargetActor);
+
+	FActiveGameplayEffectHandle ActiveGameplayEffectHandle = SourceASC->ApplyGameplayEffectSpecToTarget(*InSpecHandle.Data, TargetASC);
+	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
+}
+

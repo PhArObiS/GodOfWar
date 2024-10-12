@@ -7,6 +7,7 @@
 #include "GodOfWarTypes/GodOfWarEnumTypes.h"
 #include "GodOfWarFunctionLibrary.generated.h"
 
+struct FGameplayEffectSpecHandle;
 class UPawnCombatComponent;
 struct FGameplayTag;
 class UGodOfWarAbilitySystemComponent;
@@ -40,4 +41,7 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|FunctionLibrary")
 	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
+
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary")
+	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
 };
