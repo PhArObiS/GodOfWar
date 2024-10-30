@@ -7,6 +7,10 @@
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "GodOfWarGameplayTags.h"
+
+#include "GodOfWarDebugHelper.h"
+
 
 UGodOfWarAbilitySystemComponent* UGodOfWarFunctionLibrary::NativeGetGodOfWarASCFromActor(AActor* InActor)
 {
@@ -99,7 +103,36 @@ FGameplayTag UGodOfWarFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAtt
 	{
 		OutAngleDifference *= -1.f;
 	}
-	return FGameplayTag();
+
+	if (OutAngleDifference >= -45.f && OutAngleDifference <= 45.f)
+	{
+		return GodOfWarGameplayTags::Shared_Status_HitReact_Front;
+	}
+	else if (OutAngleDifference < -45.f && OutAngleDifference >= -135.f)
+	{
+		return GodOfWarGameplayTags::Shared_Status_HitReact_Left;
+	}
+	else if (OutAngleDifference < -135.f || OutAngleDifference > 135.f)
+	{
+		return GodOfWarGameplayTags::Shared_Status_HitReact_Back;
+	}
+	else if (OutAngleDifference > 45.f && OutAngleDifference <= 135.f)
+	{
+		return GodOfWarGameplayTags::Shared_Status_HitReact_Right;
+	}
+	
+	return GodOfWarGameplayTags::Shared_Status_HitReact_Front;
+}
+
+bool UGodOfWarFunctionLibrary::IsValidBlock(AActor* InAttacker, AActor* InDefender)
+{
+	check(InAttacker && InDefender);
+
+	const float DotResult = FVector::DotProduct(InAttacker->GetActorForwardVector(), InDefender->GetActorForwardVector());
+	// const FString DebugString = FString::Printf(TEXT("Dot Result: %f %s"), DotResult, DotResult < -0.1f? TEXT("Valid Block") : TEXT("InvalidBlock"));
+	// Debug::Print(DebugString, DotResult < -0.1f ? FColor::Green : FColor::Red);
+
+	return DotResult < -0.1f;
 }
 
 bool UGodOfWarFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)

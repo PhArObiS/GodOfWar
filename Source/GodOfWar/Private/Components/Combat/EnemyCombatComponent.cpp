@@ -2,10 +2,12 @@
 
 
 #include "Components/Combat/EnemyCombatComponent.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
-#include "GodOfWarDebugHelper.h"
 #include "GodOfWarGameplayTags.h"
+#include "GodOfWarFunctionLibrary.h"
+
+#include "GodOfWarDebugHelper.h"
+
 
 void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 {
@@ -20,12 +22,14 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	// TODO::Implement Block Check
 	bool bIsValidBlock = false;
 
-	const bool bIsPlayerBlocking = false;
+	const bool bIsPlayerBlocking = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(HitActor, GodOfWarGameplayTags::Player_Status_Blocking);
 	const bool bIsMyAttackUnblockable = false;
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
 		// TODO::Check block is valid
+		bIsValidBlock = UGodOfWarFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
+		
 	}
 
 	FGameplayEventData EventData;
@@ -34,7 +38,13 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	
 	if (bIsValidBlock)
 	{
-		// TODO::Handle successful block
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			HitActor,
+			GodOfWarGameplayTags::Player_Event_SuccessfulBlock,
+			EventData
+			);
+			
+		
 	}
 	else
 	{

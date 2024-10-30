@@ -2,6 +2,8 @@
 
 
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
+
+#include "GodOfWarGameplayTags.h"
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
 
 void UGodOfWarAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& InInputTag)
@@ -15,12 +17,38 @@ void UGodOfWarAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& 
 	{
 		if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
 
-		TryActivateAbility(AbilitySpec.Handle);
+		if (InInputTag.MatchesTag(GodOfWarGameplayTags::InputTag_Toggleable))
+		{
+			if (AbilitySpec.IsActive())
+			{
+				CancelAbilityHandle(AbilitySpec.Handle);
+			}
+			else
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
+		else
+		{
+			TryActivateAbility(AbilitySpec.Handle);
+		}
 	}
 }
 
 void UGodOfWarAbilitySystemComponent::OnAbilityInputReleased(const FGameplayTag& InInputTag)
 {
+	if (!InInputTag.IsValid() || !InInputTag.MatchesTag(GodOfWarGameplayTags::InputTag_MustBeHeld))
+	{
+		return;
+	}
+
+	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag) && AbilitySpec.IsActive())
+		{
+			CancelAbilityHandle(AbilitySpec.Handle);
+		}
+	}
 }
 
 void UGodOfWarAbilitySystemComponent::GrantHeroWeaponAbilities( const TArray<FGodOfWarHeroAbilitySet>& InDefaultWeaponAbilities, int32 ApplyLevel, TArray<FGameplayAbilitySpecHandle>& OutGrantedAbilitySpecHandles)
