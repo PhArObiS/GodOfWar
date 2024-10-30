@@ -6,6 +6,7 @@
 #include "GenericTeamAgentInterface.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Interfaces/PawnCombatInterface.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UGodOfWarAbilitySystemComponent* UGodOfWarFunctionLibrary::NativeGetGodOfWarASCFromActor(AActor* InActor)
 {
@@ -80,8 +81,28 @@ bool UGodOfWarFunctionLibrary::IsTargetPawnHostile(APawn* QueryPawn, APawn* Targ
 	return false;
 }
 
-bool UGodOfWarFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor,
-	const FGameplayEffectSpecHandle& InSpecHandle)
+float UGodOfWarFunctionLibrary::GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel)
+{
+	return InScalableFloat.GetValueAtLevel(InLevel);
+}
+
+FGameplayTag UGodOfWarFunctionLibrary::ComputeHitReactDirectionTag(AActor* InAttacker, AActor* InVictim, float& OutAngleDifference)
+{
+	check(InAttacker && InVictim);
+	const FVector VictimForward = InVictim->GetActorForwardVector();
+	const FVector VictimToAttackerNormalized = (InAttacker->GetActorLocation() - InVictim->GetActorLocation()).GetSafeNormal();
+	
+	const float DotResult = FVector::DotProduct(VictimForward,VictimToAttackerNormalized);
+	OutAngleDifference = UKismetMathLibrary::DegAcos(DotResult);
+	const FVector CrossResult = FVector::CrossProduct(VictimForward,VictimToAttackerNormalized);
+	if (CrossResult.Z < 0.f)
+	{
+		OutAngleDifference *= -1.f;
+	}
+	return FGameplayTag();
+}
+
+bool UGodOfWarFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle)
 {
 	UGodOfWarAbilitySystemComponent* SourceASC = NativeGetGodOfWarASCFromActor(InInstigator);
 	UGodOfWarAbilitySystemComponent* TargetASC = NativeGetGodOfWarASCFromActor(InTargetActor);

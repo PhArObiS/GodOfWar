@@ -56,6 +56,10 @@ namespace GodOfWarGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(Shared_SetByCaller_BaseDamage, "Shared.SetByCaller.BaseDamage");
 
 	UE_DEFINE_GAMEPLAY_TAG(Shared_Status_Dead, "Shared.Status.Dead");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_HitReact_Front, "Shared.HitReact.Front");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_HitReact_Left, "Shared.HitReact.Left");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_HitReact_Right, "Shared.HitReact.Right");
+	UE_DEFINE_GAMEPLAY_TAG(Shared_HitReact_Back, "Shared.HitReact.Back");
 	
 	
 	

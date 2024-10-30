@@ -7,11 +7,9 @@
 #include "GodOfWarTypes/GodOfWarEnumTypes.h"
 #include "GodOfWarFunctionLibrary.generated.h"
 
-struct FGameplayEffectSpecHandle;
+struct FScalableFloat;
 class UPawnCombatComponent;
-struct FGameplayTag;
 class UGodOfWarAbilitySystemComponent;
-
 
 /**
  * 
@@ -42,6 +40,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|FunctionLibrary")
 	static bool IsTargetPawnHostile(APawn* QueryPawn, APawn* TargetPawn);
 
+	UFUNCTION(BlueprintPure, Category = "Warrior|FunctionLibrary", meta = (CompactNodeTitle = "Get Value At Level"))
+	static float GetScalableFloatValueAtLevel(const FScalableFloat& InScalableFloat, float InLevel = 1.f);
+
+	UFUNCTION(BlueprintPure, Category = "Warrior|FunctionLibrary")
+	static FGameplayTag ComputeHitReactDirectionTag(AActor* InAttacker,AActor* InVictim,float& OutAngleDifference);
+
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary")
 	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
+
+	
 };
