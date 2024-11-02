@@ -23,13 +23,11 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	bool bIsValidBlock = false;
 
 	const bool bIsPlayerBlocking = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(HitActor, GodOfWarGameplayTags::Player_Status_Blocking);
-	const bool bIsMyAttackUnblockable = false;
+	const bool bIsMyAttackUnblockable = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(GetOwningPawn(), GodOfWarGameplayTags::Enemy_Status_Unblockable);
 
 	if (bIsPlayerBlocking && !bIsMyAttackUnblockable)
 	{
-		// TODO::Check block is valid
 		bIsValidBlock = UGodOfWarFunctionLibrary::IsValidBlock(GetOwningPawn(), HitActor);
-		
 	}
 
 	FGameplayEventData EventData;

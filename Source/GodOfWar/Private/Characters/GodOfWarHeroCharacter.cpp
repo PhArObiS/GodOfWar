@@ -2,6 +2,8 @@
 
 
 #include "Characters/GodOfWarHeroCharacter.h"
+
+#include "AbilitySystemBlueprintLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -87,6 +89,9 @@ void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_Look, ETriggerEvent::Triggered, this, &ThisClass::Input_Look);
 
+	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_SwitchedTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
+	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_SwitchedTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
+
 	GodOfWarInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -128,6 +133,23 @@ void AGodOfWarHeroCharacter::Input_Look(const FInputActionValue& InputActionValu
 	{
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AGodOfWarHeroCharacter::Input_SwitchTargetTriggered(const FInputActionValue& InputActionValue)
+{
+	SwitchDirection = InputActionValue.Get<FVector2D>();
+}
+
+void AGodOfWarHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		SwitchDirection.X > 0.f? GodOfWarGameplayTags::Player_Event_SwitchTarget_Right : GodOfWarGameplayTags::Player_Event_SwitchTarget_Left,
+		Data
+		);
+
+	// Debug::Print(TEXT("SwitchDirection: ") + SwitchDirection.ToString());
 }
 
 void AGodOfWarHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
