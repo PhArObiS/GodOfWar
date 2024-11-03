@@ -18,8 +18,7 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 	}
 	
 	OverlappedActors.AddUnique(HitActor);
-
-	// TODO::Implement Block Check
+	
 	bool bIsValidBlock = false;
 
 	const bool bIsPlayerBlocking = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(HitActor, GodOfWarGameplayTags::Player_Status_Blocking);
