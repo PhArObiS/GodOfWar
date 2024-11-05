@@ -7,6 +7,8 @@
 #include "GodOfWarFunctionLibrary.h"
 
 #include "GodOfWarDebugHelper.h"
+#include "Characters/GodOfWarEnemyCharacter.h"
+#include "Components/BoxComponent.h"
 
 
 void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
@@ -50,5 +52,34 @@ void UEnemyCombatComponent::OnHitTargetActor(AActor* HitActor)
 			GodOfWarGameplayTags::Shared_Event_MeleeHit,
 			EventData
 			);
+	}
+}
+
+void UEnemyCombatComponent::ToggleBodyCollisionBoxCollision(bool bShouldEnable, EToggleDamageType ToggleDamageType)
+{
+	AGodOfWarEnemyCharacter* OwningEnemyCharacter = GetOwningPawn<AGodOfWarEnemyCharacter>();
+	check(OwningEnemyCharacter);
+
+	UBoxComponent* LeftHandCollisionBox = OwningEnemyCharacter->GetLeftHandCollisionBox();
+	UBoxComponent* RightHandCollisionBox = OwningEnemyCharacter->GetRightHandCollisionBox();
+
+	check(LeftHandCollisionBox && RightHandCollisionBox);
+	switch (ToggleDamageType)
+	{
+	case EToggleDamageType::LeftHand:
+		LeftHandCollisionBox->SetCollisionEnabled(bShouldEnable? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		break;
+		
+	case EToggleDamageType::RightHand:
+		RightHandCollisionBox->SetCollisionEnabled(bShouldEnable? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision);
+		break;
+		
+	default:
+		break;
+	}
+
+	if (!bShouldEnable)
+	{
+		OverlappedActors.Empty();
 	}
 }
