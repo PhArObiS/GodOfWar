@@ -16,18 +16,10 @@ void UGodOfWarAbilitySystemComponent::OnAbilityInputPressed(const FGameplayTag& 
 	for (const FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
 	{
 		if(!AbilitySpec.DynamicAbilityTags.HasTagExact(InInputTag)) continue;
-
-		if (InInputTag.MatchesTag(GodOfWarGameplayTags::InputTag_Toggleable))
+		if (InInputTag.MatchesTag(GodOfWarGameplayTags::InputTag_Toggleable) && AbilitySpec.IsActive())
 		{
-			if (AbilitySpec.IsActive())
-			{
-				CancelAbilityHandle(AbilitySpec.Handle);
-			}
-			else
-			{
-				TryActivateAbility(AbilitySpec.Handle);
-			}
-		}
+			CancelAbilityHandle(AbilitySpec.Handle);
+		} 
 		else
 		{
 			TryActivateAbility(AbilitySpec.Handle);
