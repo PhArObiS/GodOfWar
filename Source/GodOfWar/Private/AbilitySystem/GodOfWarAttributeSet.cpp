@@ -44,7 +44,20 @@ void UGodOfWarAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCa
 	{
 		const float NewCurrentRage = FMath::Clamp(GetCurrentRage(), 0.f, GetMaxRage());
 		SetCurrentRage(NewCurrentRage);
-
+		if (GetCurrentRage() == GetMaxRage())
+		{
+			UGodOfWarFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GodOfWarGameplayTags::Player_Status_Rage_Full);
+		}
+		else if (GetCurrentRage() == 0.f)
+		{
+			UGodOfWarFunctionLibrary::AddGameplayTagToActorIfNone(Data.Target.GetAvatarActor(), GodOfWarGameplayTags::Player_Status_Rage_None);
+		}
+		else
+		{
+			UGodOfWarFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), GodOfWarGameplayTags::Player_Status_Rage_Full);
+			UGodOfWarFunctionLibrary::RemoveGameplayTagFromActorIfFound(Data.Target.GetAvatarActor(), GodOfWarGameplayTags::Player_Status_Rage_None);
+		}
+		
 		if (UHeroUIComponent* HeroUIComponent = CachedPawnUIInterface->GetHeroUIComponent())
 		{
 			HeroUIComponent->OnCurrentRageChanged.Broadcast(GetCurrentRage() / GetMaxRage());
