@@ -58,12 +58,12 @@ void AGodOfWarProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
 	}
 
 	bool bIsValidBlock = false;
-	// const bool bIsPlayerBlocking = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(HitPawn, GodOfWarGameplayTags::Player_Status_Blocking);
+	const bool bIsPlayerBlocking = UGodOfWarFunctionLibrary::NativeDoesActorHaveTag(HitPawn, GodOfWarGameplayTags::Player_Status_Blocking);
 
-	// if (bIsPlayerBlocking)
-	// {
-	// 	bIsValidBlock = UGodOfWarFunctionLibrary::IsValidBlock(this, HitPawn);
-	// }
+	if (bIsPlayerBlocking)
+	{
+		bIsValidBlock = UGodOfWarFunctionLibrary::IsValidBlock(this, HitPawn);
+	}
 
 	FGameplayEventData Data;
 	Data.Instigator = this;
@@ -71,11 +71,11 @@ void AGodOfWarProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
 
 	if (bIsValidBlock)
 	{
-		// UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
-		// 	HitPawn,
-		// 	GodOfWarGameplayTags::Player_Event_SuccessfulBlock,
-		// 	Data
-		// );
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+			HitPawn,
+			GodOfWarGameplayTags::Player_Event_SuccessfulBlock,
+			Data
+		);
 	}
 	else
 	{
@@ -89,6 +89,24 @@ void AGodOfWarProjectileBase::OnProjectileHit(UPrimitiveComponent* HitComponent,
 void AGodOfWarProjectileBase::OnProjectileBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (OverlappedActors.Contains(OtherActor))
+	{
+		return;
+	}
+
+	OverlappedActors.AddUnique(OtherActor);
+
+	if (APawn* HitPawn = Cast<APawn>(OtherActor))
+	{
+		FGameplayEventData Data;
+		Data.Instigator = GetInstigator();
+		Data.Target = HitPawn;
+		
+		if (UGodOfWarFunctionLibrary::IsTargetPawnHostile(GetInstigator(), HitPawn))
+		{
+			HandleApplyProjectileDamage(HitPawn, Data);
+		}
+	}
 }
 
 void AGodOfWarProjectileBase::HandleApplyProjectileDamage(APawn* InHitPawn, const FGameplayEventData& InPayLoad) const
