@@ -26,6 +26,19 @@ struct FGodOfWarHeroAbilitySet
 };
 
 USTRUCT(BlueprintType)
+struct FGodOfWarHeroSpecialAbilitySet : public FGodOfWarHeroAbilitySet
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftObjectPtr<UMaterialInterface> AbilityIconMaterial;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (Categories = "Player.Cooldown"))
+	FGameplayTag AbilityCooldownTag;
+	
+};
+
+USTRUCT(BlueprintType)
 struct FGodOfWarHeroWeaponData
 {
 	GENERATED_BODY()
@@ -38,6 +51,9 @@ struct FGodOfWarHeroWeaponData
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
 	TArray<FGodOfWarHeroAbilitySet> DefaultWeaponAbilities;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (TitleProperty = "InputTag"))
+	TArray<FGodOfWarHeroSpecialAbilitySet> SpecialWeaponAbilities;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FScalableFloat WeaponBaseDamage;
