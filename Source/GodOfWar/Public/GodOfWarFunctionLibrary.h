@@ -52,5 +52,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary")
 	static bool ApplyGameplayEffectSpecHandleToTargetActor(AActor* InInstigator, AActor* InTargetActor, const FGameplayEffectSpecHandle& InSpecHandle);
 
-	
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|FunctionLibrary", meta = (Latent, WorldContext = "WorldContextObject", LatentInfo = "LatentInfo", ExpandEnumAsExecs = "CountDownInput|CountDownOutput", TotalTIme = "1.0", UpdateInterval = "0.1"))
+	static void CountDown(const UObject* WorldContextObject, float  TotalTime, float UpdateInterval,
+		float& OutRemainingTime, EGodOfWarCountDownActionInput CountDownInput,
+		UPARAM(DisplayName = "Output") EGodOfWarCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo);
 };

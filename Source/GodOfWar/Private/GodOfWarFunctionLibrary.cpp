@@ -144,3 +144,10 @@ bool UGodOfWarFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(AActor
 	return ActiveGameplayEffectHandle.WasSuccessfullyApplied();
 }
 
+void UGodOfWarFunctionLibrary::CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval,
+	float& OutRemainingTime, EGodOfWarCountDownActionInput CountDownInput,
+	UPARAM(DisplayName = "Output") EGodOfWarCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo)
+{
+	
+}
+
