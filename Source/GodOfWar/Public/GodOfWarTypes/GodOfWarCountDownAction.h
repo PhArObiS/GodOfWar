@@ -20,8 +20,11 @@ public:
 	, ElapsedInterval(0.f)
 	, ElapsedTimeSinceStart(0.f)
 	{
-		
 	}
+
+	virtual void UpdateOperation(FLatentResponse& Response) override;
+
+	void CancelAction();
 
 private:
 	bool bNeedToCancel;

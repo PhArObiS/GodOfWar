@@ -2,10 +2,11 @@
 
 
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
-
 #include "AbilitySystemBlueprintLibrary.h"
+#include "GodOfWarFunctionLibrary.h"
 #include "AbilitySystem/GodOfWarAbilitySystemComponent.h"
 #include "Components/Combat/PawnCombatComponent.h"
+#include "GodOfWarGameplayTags.h"
 
 void UGodOfWarGameplayAbility::OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec)
 {
@@ -62,4 +63,37 @@ FActiveGameplayEffectHandle UGodOfWarGameplayAbility::BP_ApplyEffectSpecHandleTo
 	OutSuccessType = ActiveGameplayEffectHandle.WasSuccessfullyApplied() ? EGodOfWarSuccessType::Successful : EGodOfWarSuccessType::Failed;
 
 	return ActiveGameplayEffectHandle;
+}
+
+void UGodOfWarGameplayAbility::ApplyGameplayEffectSpecHandleToHitResults(const FGameplayEffectSpecHandle& InSpecHandle, const TArray<FHitResult>& InHitResults)
+{
+	if (InHitResults.IsEmpty())
+	{
+		return;
+	}
+
+	APawn* OwningPawn = CastChecked<APawn>(GetAvatarActorFromActorInfo());
+
+	for (const FHitResult& Hit : InHitResults)
+	{
+		if (APawn* HitPawn = Cast<APawn>(Hit.GetActor()))
+		{
+			if (UGodOfWarFunctionLibrary::IsTargetPawnHostile(OwningPawn, HitPawn))
+			{
+				FActiveGameplayEffectHandle ActiveGameplayEffectHandle = NativeApplyEffectSpecHandleToTarget(HitPawn, InSpecHandle);
+				if (ActiveGameplayEffectHandle.WasSuccessfullyApplied())
+				{
+					FGameplayEventData Data;
+					Data.Instigator = OwningPawn;
+					Data.Target = HitPawn;
+
+					UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+						HitPawn,
+						GodOfWarGameplayTags::Shared_Event_HitReact,
+						Data
+					);
+				}
+			}
+		}
+	}
 }

@@ -30,6 +30,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);
 
+	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Ability")
+	bool GetAbilityRemainingCooldownByTag(FGameplayTag InCooldownTag, float& TotalCooldownTime, float& RemainingCooldownTime);
+
 private:
 	TWeakObjectPtr<AGodOfWarHeroCharacter> CachedGodOfWarHeroCharacter;
 	TWeakObjectPtr<AGodOfWarHeroController> CachedGodOfWarHeroController;

@@ -29,6 +29,6 @@ public:
 	FOnAbilityIconSlotUpdatedDelegate OnAbilityIconSlotUpdated;
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
-	FOnAbilityCooldownBeginDelegate OnAbilityCooldownBeginDelegate;
+	FOnAbilityCooldownBeginDelegate OnAbilityCooldownBegin;
 	
 };

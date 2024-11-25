@@ -10,6 +10,7 @@
 #include "GodOfWarGameplayTags.h"
 
 #include "GodOfWarDebugHelper.h"
+#include "GodOfWarTypes/GodOfWarCountDownAction.h"
 
 
 UGodOfWarAbilitySystemComponent* UGodOfWarFunctionLibrary::NativeGetGodOfWarASCFromActor(AActor* InActor)
@@ -148,6 +149,39 @@ void UGodOfWarFunctionLibrary::CountDown(const UObject* WorldContextObject, floa
 	float& OutRemainingTime, EGodOfWarCountDownActionInput CountDownInput,
 	UPARAM(DisplayName = "Output") EGodOfWarCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo)
 {
+	UWorld* World = nullptr;
+
+	if (GEngine)
+	{
+		World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
+	}
+
+	if (!World)
+	{
+		return;
+	}
+
+	FLatentActionManager& LatentActionManager = World->GetLatentActionManager();
+	FGodOfWarCountDownAction* FoundAction = LatentActionManager.FindExistingAction<FGodOfWarCountDownAction>(LatentInfo.CallbackTarget, LatentInfo.UUID);
 	
+	if (CountDownInput == EGodOfWarCountDownActionInput::Start)
+	{
+		if (!FoundAction)
+		{
+			LatentActionManager.AddNewAction(
+				LatentInfo.CallbackTarget,
+				LatentInfo.UUID,
+				new FGodOfWarCountDownAction(TotalTime, UpdateInterval, OutRemainingTime, CountDownOutput, LatentInfo)
+			);
+		}
+	}
+
+	if (CountDownInput == EGodOfWarCountDownActionInput::Cancel)
+	{
+		if (FoundAction)
+		{
+			FoundAction->CancelAction();
+		}
+	}
 }
 
