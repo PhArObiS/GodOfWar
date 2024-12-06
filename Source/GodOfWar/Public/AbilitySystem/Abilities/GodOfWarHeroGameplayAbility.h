@@ -6,6 +6,7 @@
 #include "AbilitySystem/Abilities/GodOfWarGameplayAbility.h"
 #include "GodOfWarHeroGameplayAbility.generated.h"
 
+class UHeroUIComponent;
 class UHeroCombatComponent;
 class AGodOfWarHeroController;
 class AGodOfWarHeroCharacter;
@@ -26,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
+
+	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
+	UHeroUIComponent* GetHeroUIComponentFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "GodOfWar|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);

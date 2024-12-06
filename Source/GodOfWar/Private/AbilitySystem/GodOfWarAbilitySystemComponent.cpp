@@ -93,16 +93,16 @@ void UGodOfWarAbilitySystemComponent::RemovedGrantedHeroWeaponAbilities( TArray<
 	InSpecHandlesToRemove.Empty();
 }
 
-bool UGodOfWarAbilitySystemComponent::ActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
+bool UGodOfWarAbilitySystemComponent::TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate)
 {
 	check(AbilityTagToActivate.IsValid());
 
 	TArray<FGameplayAbilitySpec*> FoundAbilitySpecs;
-	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(), FoundAbilitySpecs);
-
+	GetActivatableGameplayAbilitySpecsByAllMatchingTags(AbilityTagToActivate.GetSingleTagContainer(),FoundAbilitySpecs);
+	
 	if (!FoundAbilitySpecs.IsEmpty())
 	{
-		const int32 RandomAbilityIndex = FMath::RandRange(0, FoundAbilitySpecs.Num() - 1);
+		const int32 RandomAbilityIndex = FMath::RandRange(0,FoundAbilitySpecs.Num() - 1);
 		FGameplayAbilitySpec* SpecToActivate = FoundAbilitySpecs[RandomAbilityIndex];
 
 		check(SpecToActivate);

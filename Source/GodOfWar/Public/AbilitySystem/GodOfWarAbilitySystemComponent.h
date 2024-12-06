@@ -25,6 +25,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Ability")
 	void RemovedGrantedHeroWeaponAbilities(UPARAM(ref) TArray<FGameplayAbilitySpecHandle>& InSpecHandlesToRemove);
 
-	UFUNCTION(BlueprintCallable, Category = "GodOfWar|Ability")
-	bool ActivateAbilityByTag(FGameplayTag AbilityTagToActivate);
+	UFUNCTION(BlueprintCallable, Category = "Warrior|Ability")
+	bool TryActivateAbilityByTag(FGameplayTag AbilityTagToActivate);
 };

@@ -92,6 +92,7 @@ void AGodOfWarHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerIn
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_SwitchedTarget, ETriggerEvent::Triggered, this, &ThisClass::Input_SwitchTargetTriggered);
 	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_SwitchedTarget, ETriggerEvent::Completed, this, &ThisClass::Input_SwitchTargetCompleted);
 
+	GodOfWarInputComponent->BindNativeInputAction(InputConfigDataAsset, GodOfWarGameplayTags::InputTag_PickUp_Stones, ETriggerEvent::Started, this, &ThisClass::Input_PickUpStonesStarted);
 	GodOfWarInputComponent->BindAbilityInputAction(InputConfigDataAsset, this, &ThisClass::Input_AbilityInputPressed, &ThisClass::Input_AbilityInputReleased);
 }
 
@@ -150,6 +151,16 @@ void AGodOfWarHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue
 		);
 
 	// Debug::Print(TEXT("SwitchDirection: ") + SwitchDirection.ToString());
+}
+
+void AGodOfWarHeroCharacter::Input_PickUpStonesStarted(const FInputActionValue& InputActionValue)
+{
+	FGameplayEventData Data;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
+		this,
+		GodOfWarGameplayTags::Player_Event_ConsumeStones,
+		Data
+		);
 }
 
 void AGodOfWarHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
